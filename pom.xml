@@ -7,7 +7,8 @@
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <vaadin.version>14.4.1</vaadin.version>
@@ -213,13 +214,6 @@
 
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <release>11</release>
-                        </configuration>
-                    </plugin>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
