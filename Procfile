@@ -1,1 +1,1 @@
-web: java -jar target/shopwishlist-1.0.jar $PORT
+web: java -jar target/shopwishlist-1.0.jar
