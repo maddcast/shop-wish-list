@@ -2,7 +2,7 @@ package com.antilogics.feedback.views.queue;
 
 import com.antilogics.feedback.domain.Product;
 import com.antilogics.feedback.service.ProductService;
-import com.antilogics.feedback.views.GlobalPasswordField;
+import com.antilogics.feedback.views.AuthButton;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -26,7 +26,7 @@ public class RatingDialog extends Dialog {
     @Resource
     private ProductService productService;
     @Resource
-    private GlobalPasswordField passwordField;
+    private AuthButton confirmButton;
 
     private Checkbox orderAgain;
     private TextArea comment;
@@ -59,12 +59,11 @@ public class RatingDialog extends Dialog {
         stars.setLabel("Рейтинг");
         stars.setItems(1, 2, 3, 4, 5);
         panel.add(stars);
-        panel.add(passwordField);
 
-        Button confirmButton = new Button("Оценить", event -> {
-            if (updateProduct(product)) {
-                close();
-            }
+        confirmButton.setText("Оценить");
+        confirmButton.setOnClick(() -> {
+            updateProduct(product);
+            close();
         });
         confirmButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Button cancelButton = new Button("Отмена", event -> {
@@ -75,15 +74,11 @@ public class RatingDialog extends Dialog {
         add(panel);
     }
 
-    private boolean updateProduct(Product product) {
-        boolean valid = passwordField.valid();
-        if (valid) {
-            product.setModerated(true);
-            product.setOrderAgain(orderAgain.getValue());
-            product.setComment(comment.getValue());
-            product.setStars(stars.getOptionalValue().orElse(0));
-            productService.saveAndFlush(product);
-        }
-        return valid;
+    private void updateProduct(Product product) {
+        product.setModerated(true);
+        product.setOrderAgain(orderAgain.getValue());
+        product.setComment(comment.getValue());
+        product.setStars(stars.getOptionalValue().orElse(0));
+        productService.saveAndFlush(product);
     }
 }
